@@ -28,11 +28,7 @@ public partial class StartupWindow : Window
     {
         return Task.Run(() =>
         {
-            // Имитация загрузки ресурсов
-            for (int i = 0; i < 10; i++)
-            {
-                System.Threading.Thread.Sleep(200); // Задержка для имитации загрузки
-            }
+            System.Threading.Thread.Sleep(500);
         });
     }
 }
