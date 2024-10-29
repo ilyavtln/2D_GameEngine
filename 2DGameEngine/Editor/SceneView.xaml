@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="_2DGameEngine.Editor.SceneView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:local="clr-namespace:_2DGameEngine.Editor"
+             mc:Ignorable="d"
+             d:DesignHeight="300" d:DesignWidth="300">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- Панель инструментов -->
+        <StackPanel Orientation="Horizontal" Background="White" Margin="0,0,0,10">
+            <Button Content="Move" Tag="Move" Click="ToolButton_Click" Background="White"/>
+            <Button Content="Rotate" Tag="Rotate" Click="ToolButton_Click" Background="White"/>
+            <Button Content="Scale" Tag="Scale" Click="ToolButton_Click" Background="White"/>
+            <Button Content="View" Tag="View" Click="ToolButton_Click" Background="White"/>
+        </StackPanel>
+
+        <!-- Прокручиваемая область -->
+        <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
+            <Canvas x:Name="SceneCanvas" Background="White" MouseWheel="SceneCanvas_MouseWheel">
+                <Canvas.RenderTransform>
+                    <ScaleTransform x:Name="ZoomTransform" ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
+                </Canvas.RenderTransform>
+                <!-- Сетка будет рисоваться программно -->
+            </Canvas>
+        </ScrollViewer>
+    </Grid>
+</UserControl>

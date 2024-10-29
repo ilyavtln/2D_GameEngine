@@ -1,0 +1,83 @@
+﻿<Window x:Class="_2DGameEngine.Editor.MainEditorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:local="clr-namespace:_2DGameEngine.Editor"
+        mc:Ignorable="d"
+        Title="MainEditorWindow" Height="450" Width="800"
+        WindowState="Maximized">
+    <DockPanel>
+        <!-- Панель меню -->
+        <Menu DockPanel.Dock="Top" Background="White">
+            <MenuItem Header="File">
+                <MenuItem Header="New Project" Click="NewProject_Click"/>
+                <MenuItem Header="Open Project" Click="OpenProject_Click"/>
+                <Separator/>
+                <MenuItem Header="Save" Click="Save_Click"/>
+                <MenuItem Header="Save As..." Click="SaveAs_Click"/>
+                <Separator/>
+                <MenuItem Header="Build" Click="Build_Click"/>
+                <Separator/>
+                <MenuItem Header="Exit" Click="Exit_Click"/>
+            </MenuItem>
+            <MenuItem Header="Edit">
+                <MenuItem Header="Undo" Click="Undo_Click"/>
+                <MenuItem Header="Redo" Click="Redo_Click"/>
+                <Separator/>
+                <MenuItem Header="Cut" Click="Cut_Click"/>
+                <MenuItem Header="Copy" Click="Copy_Click"/>
+                <MenuItem Header="Paste" Click="Paste_Click"/>
+            </MenuItem>
+            <MenuItem Header="Assets">
+                <MenuItem Header="Import Package" Click="ImportPackage_Click"/>
+                <MenuItem Header="Export Package" Click="ExportPackage_Click"/>
+            </MenuItem>
+            <MenuItem Header="GameObject">
+                <MenuItem Header="Create Empty" Click="CreateEmpty_Click"/>
+                <MenuItem Header="2D Object">
+                    <MenuItem Header="Sprite" Click="CreateSprite_Click"/>
+                </MenuItem>
+            </MenuItem>
+            <MenuItem Header="Components">
+                <MenuItem Header="Physics">
+                    <MenuItem Header="Rigidbody" Click="AddRigidbody_Click"/>
+                    <MenuItem Header="Collider" Click="AddCollider_Click"/>
+                </MenuItem>
+                <MenuItem Header="Rendering">
+                    <MenuItem Header="Mesh Renderer" Click="AddMeshRenderer_Click"/>
+                    <MenuItem Header="Sprite Renderer" Click="AddSpriteRenderer_Click"/>
+                </MenuItem>
+            </MenuItem>
+        </Menu>
+        
+        <!-- Панель Иерархии -->
+        <GroupBox Header="Hierarchy" DockPanel.Dock="Left" Width="200">
+            <local:HierarchyPanel x:Name="HierarchyPanel"/>
+        </GroupBox>
+        
+        <!-- Панель Инспектора -->
+        <GroupBox Header="Inspector" DockPanel.Dock="Right" Width="200">
+            <local:InspectorPanel x:Name="InspectorPanel"/>
+        </GroupBox>
+        
+        <!-- Основная область для сцены и панели файлов -->
+        <Grid DockPanel.Dock="Left">
+            <!-- Определение строк Grid: 80% для сцены и 20% для файлов -->
+            <Grid.RowDefinitions>
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+
+            <!-- Основная область сцены -->
+            <GroupBox Header="Scene" Grid.Row="0">
+                <local:SceneView x:Name="SceneView"/>
+            </GroupBox>
+
+            <!-- Панель файлового обозревателя внизу -->
+            <GroupBox Header="Project" Grid.Row="1">
+                <local:FileExplorerPanel x:Name="FileExplorerPanel"/>
+            </GroupBox>
+        </Grid>
+    </DockPanel>
+</Window>
