@@ -9,7 +9,7 @@ public class Sprite : GameObject
     public Image? SpriteImage { get; set; }
     public string Color { get; set; }
 
-    public Sprite(string name, Image? spriteImage, string color) : base(name)
+    public Sprite(string name, Image? spriteImage, string color = "White") : base(name)
     {
         SpriteImage = spriteImage;
         Color = color;
