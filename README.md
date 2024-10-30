@@ -15,6 +15,7 @@
 ## Установка
 
 1. Убедитесь, что у вас установлен .NET SDK.
-2. Склонируйте репозиторий на локальный компьютер:
+2. 
+3. Склонируйте репозиторий на локальный компьютер:
    ```bash
-  https://github.com/ilyavtln/2D_GameEngine.git
+   https://github.com/ilyavtln/2D_GameEngine.git
