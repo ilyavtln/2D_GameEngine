@@ -1,12 +1,25 @@
-﻿namespace _2DGameEngine.GameEngine.Core;
+﻿using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Shapes;
+
+namespace _2DGameEngine.GameEngine.Core;
 
 public class Scene
 {
     public List<GameObject> GameObjects { get; private set; } = new List<GameObject>();
+    public string Name { get; set; }
+    
+    public Scene(string name)
+    {
+        Name = name;
+    }
+
+    public event Action<GameObject>? GameObjectAdded;
 
     public void AddGameObject(GameObject gameObject)
     {
         GameObjects.Add(gameObject);
+        GameObjectAdded?.Invoke(gameObject); // Оповещение о добавлении GameObject
     }
 
     public void Update()
@@ -17,8 +30,8 @@ public class Scene
         }
     }
 
-    public void Render()
+    public void Render(Canvas canvas)
     {
-        // Логика рендеринга объектов сцены
+        canvas.Children.Clear(); // Очистка существующих визуальных элементов
     }
 }

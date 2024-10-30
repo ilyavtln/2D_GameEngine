@@ -1,42 +1,43 @@
-﻿using System.Windows.Controls;
+﻿using System.ComponentModel;
+using System.Windows.Controls;
 using System.IO;
+using System.Windows.Input;
 
 namespace _2DGameEngine.Editor;
 
-public partial class FileExplorerPanel : UserControl
+public partial class FileExplorerPanel : UserControl, INotifyPropertyChanged
 {
-    private string _projectRootPath;
-    
+    private string? _currentDirectory;
+
+    public string? CurrentDirectory
+    {
+        get => _currentDirectory;
+        set
+        {
+            _currentDirectory = value;
+            OnPropertyChanged(nameof(CurrentDirectory));
+        }
+    }
+
     public FileExplorerPanel()
     {
         InitializeComponent();
-        _projectRootPath = Path.Combine(Directory.GetCurrentDirectory(), "Assets");
-        LoadDirectoryStructure();
+        DataContext = this;
+        CurrentDirectory = Path.GetFullPath(Directory.GetCurrentDirectory());
     }
-    
-    private void LoadDirectoryStructure()
+
+    private void FileTreeView_MouseDoubleClick(object sender, MouseButtonEventArgs e)
     {
-        if (Directory.Exists(_projectRootPath))
+        if (FileTreeView.SelectedItem is TreeViewItem selectedItem && selectedItem.Tag is string path && Directory.Exists(path))
         {
-            LoadDirectory(RootFolder, _projectRootPath);
+            CurrentDirectory = path; // Обновляем CurrentDirectory на выбранную папку
         }
     }
 
-    private void LoadDirectory(TreeViewItem parentItem, string path)
-    {
-        // Добавляем папки
-        foreach (var dir in Directory.GetDirectories(path))
-        {
-            var dirItem = new TreeViewItem { Header = Path.GetFileName(dir) };
-            parentItem.Items.Add(dirItem);
-            LoadDirectory(dirItem, dir); // Рекурсивно загружаем вложенные папки
-        }
+    public event PropertyChangedEventHandler? PropertyChanged;
 
-        // Добавляем файлы
-        foreach (var file in Directory.GetFiles(path))
-        {
-            var fileItem = new TreeViewItem { Header = Path.GetFileName(file) };
-            parentItem.Items.Add(fileItem);
-        }
+    protected virtual void OnPropertyChanged(string propertyName)
+    {
+        PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

@@ -1,13 +1,21 @@
-﻿using System.Windows.Controls;
+﻿using System.Windows;
+using System.Windows.Controls;
+using _2DGameEngine.GameEngine.Core;
 
-namespace _2DGameEngine.GameEngine.Components;
-
-public class SpriteRenderer : Component
+namespace _2DGameEngine.GameEngine.Components
 {
-    public Image Sprite { get; set; }
-
-    public override void Update()
+    public class SpriteRenderer : Component
     {
-        // Логика рендеринга спрайта, привязанного к GameObject
+        public static readonly string ComponentName = "Sprite Renderer";
+        public Image? Sprite { get; set; }
+
+        public SpriteRenderer(Image? sprite) : base(ComponentName)
+        {
+            Sprite = sprite;
+        }
+
+        public override void Update()
+        {
+        }
     }
 }

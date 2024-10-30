@@ -10,8 +10,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Assets\" />
-      <Folder Include="GameEngine\Utils\" />
+      <Folder Include="Assets\Audio\" />
+      <Folder Include="Assets\Sprites\" />
+      <Folder Include="GameEngine\Utils\functions\" />
+      <Folder Include="GameEngine\Utils\Interfaces\" />
       <Folder Include="Game\" />
       <Folder Include="Shared\EditorConfig\" />
     </ItemGroup>

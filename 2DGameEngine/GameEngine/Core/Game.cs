@@ -8,18 +8,12 @@ public class Game
     public void Run()
     {
         _isRunning = true;
-        Initialize();
         
         while (_isRunning)
         {
             Update();
             Render();
         }
-    }
-
-    private void Initialize()
-    {
-        _currentScene = new Scene();
     }
 
     private void Update()
@@ -29,6 +23,6 @@ public class Game
 
     private void Render()
     {
-        _currentScene.Render();
+        
     }
 }

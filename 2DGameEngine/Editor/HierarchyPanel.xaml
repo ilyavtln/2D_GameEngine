@@ -6,5 +6,17 @@
              xmlns:local="clr-namespace:_2DGameEngine.Editor"
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
-    <TreeView x:Name="HierarchyTreeView" />
+    <UserControl.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Create Empty" Click="CreateEmpty_Click" />
+            <MenuItem Header="Create Sprite">
+                <MenuItem Header="Square" Click="CreateSpriteSquare_Click" />
+                <MenuItem Header="Circle" Click="CreateSpriteCircle_Click" />
+            </MenuItem>
+        </ContextMenu>
+    </UserControl.ContextMenu>
+
+    <Grid>
+        <TreeView x:Name="HierarchyTreeView" />
+    </Grid>
 </UserControl>

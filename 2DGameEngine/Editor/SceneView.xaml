@@ -22,7 +22,7 @@
 
         <!-- Прокручиваемая область -->
         <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <Canvas x:Name="SceneCanvas" Background="White" MouseWheel="SceneCanvas_MouseWheel">
+            <Canvas x:Name="SceneCanvas" Background="LightBlue" MouseWheel="SceneCanvas_MouseWheel">
                 <Canvas.RenderTransform>
                     <ScaleTransform x:Name="ZoomTransform" ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
                 </Canvas.RenderTransform>

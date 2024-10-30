@@ -3,13 +3,19 @@ using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Shapes;
+using _2DGameEngine.GameEngine.Core;
 
 namespace _2DGameEngine.Editor;
 
 public partial class SceneView : UserControl
 {
+    
+    private Scene _scene;
+    
     private double _zoomScale = 1.0; // Начальный масштаб
-    private readonly int _gridSize = 16;
+    private readonly double _maxScale = 40.0;
+    private readonly double _minScale = 1.0;
+    private readonly int _gridSize = 8;
     private readonly double _strokeThickness = 0.2;
     private string? _currentTool = "View";
     
@@ -18,6 +24,17 @@ public partial class SceneView : UserControl
         InitializeComponent();
         DrawGrid(); // Рисуем сетку при инициализации
         SceneCanvas.SizeChanged += SceneCanvas_SizeChanged; 
+    }
+    
+    public void SetScene(Scene scene)
+    {
+        _scene = scene;
+        _scene.GameObjectAdded += OnGameObjectAdded;
+    }
+
+    private void OnGameObjectAdded(GameObject gameObject)
+    {
+        _scene.Render(SceneCanvas);
     }
 
     private void SceneCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -67,14 +84,14 @@ public partial class SceneView : UserControl
         // Обработка зума
         if (e.Delta > 0) // Приближение
         {
-            if (_zoomScale < 10.0) // Максимальный масштаб
+            if (_zoomScale < _maxScale) // Максимальный масштаб
             {
                 _zoomScale *= 1.1;
             }
         }
         else // Отдаление
         {
-            if (_zoomScale > 1.0) // Минимальный масштаб
+            if (_zoomScale > _minScale) // Минимальный масштаб
             {
                 _zoomScale /= 1.1;
             }

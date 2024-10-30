@@ -2,17 +2,21 @@
 
 namespace _2DGameEngine.GameEngine.Core;
 
+/// <summary>
+/// Класс, используемый для всех объектов в сцене
+/// </summary>
 public class GameObject
 {
+    // Название объекта
     public string Name { get; set; }
-    public Transform Transform { get; set; }
+    
+    // Список компонентов 
     public List<Component> Components { get; private set; }
 
     public GameObject(string name)
     {
         Name = name;
-        Transform = new Transform();
-        Components = new List<Component>();
+        Components = new List<Component>(){ new Transform() };
     }
 
     public void AddComponent(Component component)
@@ -20,11 +24,11 @@ public class GameObject
         Components.Add(component);
     }
 
-    public T GetComponent<T>() where T : Component
+    public T? GetComponent<T>() where T : Component
     {
         return Components.OfType<T>().FirstOrDefault();
     }
-
+    
     public void Update()
     {
         foreach (var component in Components)
