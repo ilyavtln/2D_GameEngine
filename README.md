@@ -17,4 +17,4 @@
 1. Убедитесь, что у вас установлен .NET SDK.
 2. Склонируйте репозиторий на локальный компьютер:
    ```bash
-   git clone https://github.com/yourusername/2DGameEngine.git
+   [git clone https://github.com/yourusername/2DGameEngine.git](https://github.com/ilyavtln/2D_GameEngine.git)
