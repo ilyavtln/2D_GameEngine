@@ -1,10 +1,13 @@
 ﻿using System.Windows;
 using _2DGameEngine.Editor;
+using _2DGameEngine.GameEngine.Core;
 
 namespace _2DGameEngine.Startup;
 
 public partial class StartupWindow : Window
 {
+    private readonly Scene? _mainScene = new Scene("Main Scene");
+    
     public StartupWindow()
     {
         InitializeComponent();

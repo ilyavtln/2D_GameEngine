@@ -19,6 +19,7 @@ public class GameObject
         Components = new List<Component>(){ new Transform() };
     }
 
+    // Добавляет компонент
     public void AddComponent(Component component)
     {
         Components.Add(component);

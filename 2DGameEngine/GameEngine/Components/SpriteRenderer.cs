@@ -2,20 +2,22 @@
 using System.Windows.Controls;
 using _2DGameEngine.GameEngine.Core;
 
-namespace _2DGameEngine.GameEngine.Components
+namespace _2DGameEngine.GameEngine.Components;
+
+/// <summary>
+/// Класс, отвечающий за отрисовку спрайтов
+/// </summary>
+public class SpriteRenderer : Component
 {
-    public class SpriteRenderer : Component
+    public static readonly string ComponentName = "Sprite Renderer";
+    public Image? Sprite { get; set; }
+
+    public SpriteRenderer(Image? sprite) : base(ComponentName)
     {
-        public static readonly string ComponentName = "Sprite Renderer";
-        public Image? Sprite { get; set; }
+        Sprite = sprite;
+    }
 
-        public SpriteRenderer(Image? sprite) : base(ComponentName)
-        {
-            Sprite = sprite;
-        }
-
-        public override void Update()
-        {
-        }
+    public override void Update()
+    {
     }
 }

@@ -6,14 +6,8 @@ namespace _2DGameEngine.Editor;
 
 public partial class MainEditorWindow : Window
 {
-    private Scene _scene;
+    public Scene Scene = new Scene("Main Scene");
     private int _sceneIndex = 1;
-    
-    public Scene Scene
-    {
-        get => _scene;
-        set => _scene = value;
-    }
 
     public MainEditorWindow()
     {
@@ -29,9 +23,9 @@ public partial class MainEditorWindow : Window
     
     private void InitializeScene(string sceneName)
     {
-        _scene = new Scene(sceneName);
-        SceneView.SetScene(_scene);
-        _scene.GameObjectAdded += HierarchyPanel.AddGameObjectToHierarchy;
+        Scene = new Scene(sceneName);
+        SceneView.SetScene(Scene);
+        Scene.GameObjectAdded += HierarchyPanel.AddGameObjectToHierarchy;
     }
     
     private void SetupEventHandlers()

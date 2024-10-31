@@ -12,7 +12,6 @@ public class RenderingSystem
             var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
             if (spriteRenderer != null)
             {
-                // Логика рендеринга спрайта
             }
         }
     }

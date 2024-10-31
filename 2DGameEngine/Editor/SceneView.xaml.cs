@@ -10,7 +10,7 @@ namespace _2DGameEngine.Editor;
 public partial class SceneView : UserControl
 {
     
-    private Scene _scene;
+    private Scene? _scene;
     
     private double _zoomScale = 1.0; // Начальный масштаб
     private readonly double _maxScale = 40.0;
@@ -26,7 +26,7 @@ public partial class SceneView : UserControl
         SceneCanvas.SizeChanged += SceneCanvas_SizeChanged; 
     }
     
-    public void SetScene(Scene scene)
+    public void SetScene(Scene? scene)
     {
         _scene = scene;
         _scene.GameObjectAdded += OnGameObjectAdded;

@@ -1,20 +1,20 @@
 ﻿using System.Numerics;
 using _2DGameEngine.GameEngine.Core;
 
-namespace _2DGameEngine.GameEngine.Components
+namespace _2DGameEngine.GameEngine.Components;
+
+public class Collider : Component
 {
-    public class Collider : Component
+    public static readonly string ComponentName = "Collider";
+        
+    public Vector2 Size { get; set; }
+
+    public Collider() : base(ComponentName)
     {
-        public Vector2 Size { get; set; }
+        Size = new Vector2(1, 1);
+    }
 
-        public Collider() : base("Collider")
-        {
-            Size = new Vector2(1, 1);
-        }
-
-        public override void Update()
-        {
-            // В дальнейшем можно добавить логику столкновений
-        }
+    public override void Update()
+    {
     }
 }

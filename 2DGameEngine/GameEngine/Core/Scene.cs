@@ -19,7 +19,7 @@ public class Scene
     public void AddGameObject(GameObject gameObject)
     {
         GameObjects.Add(gameObject);
-        GameObjectAdded?.Invoke(gameObject); // Оповещение о добавлении GameObject
+        GameObjectAdded?.Invoke(gameObject);
     }
 
     public void Update()
@@ -32,6 +32,6 @@ public class Scene
 
     public void Render(Canvas canvas)
     {
-        canvas.Children.Clear(); // Очистка существующих визуальных элементов
+        canvas.Children.Clear();
     }
 }

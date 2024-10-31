@@ -9,74 +9,55 @@ namespace _2DGameEngine.Editor;
 
 public partial class HierarchyPanel : UserControl
 {
-    private int _itemsConter = 1;
+    private int _itemsCounter = 1;
     
-    public List<TreeViewItem> ChildItems { get; set; } = new List<TreeViewItem>();
-    public Scene CurrentScene { get => GetCurrentScene(); }
+    /// <summary>
+    /// Корневой объект - сцена
+    /// </summary>
+    public TreeViewItem? RootItem;
+
+    public Scene? CurrentScene
+    {
+        get => (Window.GetWindow(this) as MainEditorWindow)?.Scene;
+    }
     
     public HierarchyPanel()
     {
         InitializeComponent();
+        Loaded += OnLoaded;
+    }
+
+    private void OnLoaded(object sender, RoutedEventArgs e)
+    {
         LoadSceneObjects();
     }
     
-    private Scene GetCurrentScene()
-    {
-        var mainEditorWindow = Window.GetWindow(this) as MainEditorWindow;
-        return mainEditorWindow?.Scene;
-    }
-    
+    /// <summary>
+    /// Получаем текущую сцену и отображаем ее объекты
+    /// </summary>
     private void LoadSceneObjects()
     {
-        // Здесь можно загрузить объекты из текущей сцены и отобразить их
-        // В этом примере добавим тестовые объекты в дерево.
-        var rootItem = new TreeViewItem { Header = "Сцена 1" };
-        
-        // Инициализация списка дочерних элементов
-        ChildItems.Add(new TreeViewItem { Header = "Объект 1" });
-        ChildItems.Add(new TreeViewItem { Header = "Объект 2" });
-        ChildItems.Add(new TreeViewItem { Header = "Объект 3" });
-
-        // Добавляем дочерние элементы в корень
-        foreach (var childItem in ChildItems)
-        {
-            rootItem.Items.Add(childItem);
-        }
-
-        // Добавляем корневой элемент в дерево
-        HierarchyTreeView.Items.Add(rootItem);
+        RootItem = new TreeViewItem { Header = CurrentScene?.Name };
+        HierarchyTreeView.Items.Add(RootItem);
     }
     
     private void CreateEmpty_Click(object sender, RoutedEventArgs e)
     {
-        var newObject = new GameObject("New Empty Object");
-        AddGameObjectToHierarchy(newObject);
-        CurrentScene?.AddGameObject(newObject);
+        var emptyObject = new GameObject($"Empty Object {_itemsCounter++}");
+        AddGameObjectToHierarchy(emptyObject);
+        CurrentScene?.AddGameObject(emptyObject);
     }
 
     private void CreateSpriteSquare_Click(object sender, RoutedEventArgs e)
     {
-        var squareObject = new SquareSprite(_itemsConter.ToString());
+        var squareObject = new SquareSprite(_itemsCounter.ToString());
         AddGameObjectToHierarchy(squareObject);
         CurrentScene.AddGameObject(squareObject);
-        
-        _itemsConter++;
     }
 
     private void CreateSpriteCircle_Click(object sender, RoutedEventArgs e)
     {
-        var circleObject = CreateSpriteObject("New Circle Sprite", "circle.png"); // Предполагается, что есть ресурс circle.png
-        AddGameObjectToHierarchy(circleObject);
-        CurrentScene?.AddGameObject(circleObject);
-    }
-
-    private GameObject CreateSpriteObject(string name, string spritePath)
-    {
-        var spriteObject = new GameObject(name);
-        var spriteRenderer = new SpriteRenderer(new Image
-            { Source = new BitmapImage(new Uri(spritePath, UriKind.Relative)) });
-        spriteObject.AddComponent(spriteRenderer);
-        return spriteObject;
+        throw new NotImplementedException();
     }
 
     public void AddGameObjectToHierarchy(GameObject obj)

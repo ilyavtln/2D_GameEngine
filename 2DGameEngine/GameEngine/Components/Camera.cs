@@ -1,20 +1,21 @@
 ﻿using System.Numerics;
 using _2DGameEngine.GameEngine.Core;
 
-namespace _2DGameEngine.GameEngine.Components
+namespace _2DGameEngine.GameEngine.Components;
+
+public class Camera : Component
 {
-    public class Camera : Component
+    public static readonly string ComponentName = "Camera";
+        
+    public Vector2 Position { get; set; }
+
+    public Camera() : base(ComponentName)
     {
-        public Vector2 Position { get; set; }
+        Position = new Vector2(0, 0);
+    }
 
-        public Camera() : base("Camera")
-        {
-            Position = new Vector2(0, 0);
-        }
-
-        public override void Update()
-        {
-            // Добавьте логику смещения или масштабирования для Canvas
-        }
+    public override void Update()
+    {
+        // Добавьте логику смещения или масштабирования для Canvas
     }
 }

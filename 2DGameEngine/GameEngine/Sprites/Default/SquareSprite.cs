@@ -12,21 +12,18 @@ public class SquareSprite : Sprite
     
     private Image _squareImage;
 
-    public SquareSprite(string name, float size = 16) 
-        : base(name, null, "LightGray") // Здесь передаем null, пока изображение не создано
+    public SquareSprite(string name, float size = 16) : base(name, null, "LightGray")
     {
         Size = size;
-
-        // Создание объекта Image для представления квадрата
+        
         _squareImage = new Image
         {
             Width = Size,
             Height = Size,
-            Source = new BitmapImage(new Uri("/Assets/sprites/Square.png", UriKind.Relative)) // Загружаем изображение
+            Source = new BitmapImage(new Uri("/Assets/sprites/Square.png", UriKind.Relative))
         };
-
-        // Обновляем изображение в базовом классе
-        SpriteImage = _squareImage; // Присваиваем загруженное изображение базовому классу
+        
+        SpriteImage = _squareImage;
     }
 
     // Метод для изменения размера квадрата
