@@ -7,6 +7,7 @@
         <Nullable>enable</Nullable>
         <ImplicitUsings>enable</ImplicitUsings>
         <UseWPF>true</UseWPF>
+        <ApplicationIcon>Resources\appIcon.ico</ApplicationIcon>
     </PropertyGroup>
 
     <ItemGroup>
@@ -16,6 +17,11 @@
       <Folder Include="GameEngine\Utils\Interfaces\" />
       <Folder Include="Game\" />
       <Folder Include="Shared\EditorConfig\" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Remove="Resources\appIcon.ico" />
+      <Resource Include="Resources\appIcon.ico" />
     </ItemGroup>
 
 </Project>
