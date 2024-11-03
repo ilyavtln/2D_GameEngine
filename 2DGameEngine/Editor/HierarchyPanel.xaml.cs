@@ -52,7 +52,7 @@ public partial class HierarchyPanel : UserControl
     {
         var squareObject = new SquareSprite(_itemsCounter.ToString());
         AddGameObjectToHierarchy(squareObject);
-        CurrentScene.AddGameObject(squareObject);
+        CurrentScene?.AddGameObject(squareObject);
     }
 
     private void CreateSpriteCircle_Click(object sender, RoutedEventArgs e)
@@ -64,19 +64,7 @@ public partial class HierarchyPanel : UserControl
     {
         var gameObjectItem = new TreeViewItem { Header = obj.Name };
             
-        // Проверим, есть ли уже корневой элемент (например, "Сцена 1")
-        if (HierarchyTreeView.Items.Count == 0)
-        {
-            // Создаем корневой элемент для сцены, если он еще не добавлен
-            var rootItem = new TreeViewItem { Header = "Сцена 5" };
-            HierarchyTreeView.Items.Add(rootItem);
-            rootItem.Items.Add(gameObjectItem);
-        }
-        else
-        {
-            // Добавляем объект в существующий корневой элемент
-            var rootItem = (TreeViewItem)HierarchyTreeView.Items[0];
-            rootItem.Items.Add(gameObjectItem);
-        }
+        var rootItem = (TreeViewItem)HierarchyTreeView.Items[0];
+        rootItem.Items.Add(gameObjectItem);
     }
 }

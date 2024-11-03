@@ -13,9 +13,4 @@ public class Camera : Component
     {
         Position = new Vector2(0, 0);
     }
-
-    public override void Update()
-    {
-        // Добавьте логику смещения или масштабирования для Canvas
-    }
 }

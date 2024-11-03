@@ -11,9 +11,7 @@ public partial class InspectorPanel : UserControl
     
     public void DisplayObjectProperties(object selectedObject)
     {
-        // Очистить панель и загрузить свойства выбранного объекта
         InspectorStackPanel.Children.Clear();
-        // Пример: добавить свойства объекта
         InspectorStackPanel.Children.Add(new TextBlock { Text = "Name: GameObject 1" });
     }
 }

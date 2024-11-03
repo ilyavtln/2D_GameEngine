@@ -1,13 +1,10 @@
 ﻿using System.Windows;
 using _2DGameEngine.Editor;
-using _2DGameEngine.GameEngine.Core;
 
 namespace _2DGameEngine.Startup;
 
 public partial class StartupWindow : Window
 {
-    private readonly Scene? _mainScene = new Scene("Main Scene");
-    
     public StartupWindow()
     {
         InitializeComponent();
@@ -29,9 +26,6 @@ public partial class StartupWindow : Window
     /// </summary>
     private Task LoadDependenciesAsync()
     {
-        return Task.Run(() =>
-        {
-            System.Threading.Thread.Sleep(500);
-        });
+        return Task.Run(() => System.Threading.Thread.Sleep(500));
     }
 }

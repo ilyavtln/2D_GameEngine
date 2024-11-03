@@ -5,24 +5,22 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:local="clr-namespace:_2DGameEngine.Editor"
         mc:Ignorable="d"
-        Title="2D Game Editor" Height="450" Width="800"
+        Title="2D Game Editor" Height="800" Width="1200"
         WindowState="Maximized">
     <Grid>
-        <!-- Главная сетка для всей компоновки окна -->
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto" />  <!-- Меню -->
-            <RowDefinition Height="*" />     <!-- Основная область: иерархия, сцена, инспектор -->
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200" />   <!-- Иерархия -->
-            <ColumnDefinition Width="5" />     <!-- Горизонтальный разделитель -->
-            <ColumnDefinition Width="*" />     <!-- Сцена -->
-            <ColumnDefinition Width="5" />     <!-- Горизонтальный разделитель -->
-            <ColumnDefinition Width="200" />   <!-- Инспектор -->
+            <ColumnDefinition Width="200" /> 
+            <ColumnDefinition Width="5" />
+            <ColumnDefinition Width="*" /> 
+            <ColumnDefinition Width="5" /> 
+            <ColumnDefinition Width="200" /> 
         </Grid.ColumnDefinitions>
-
-        <!-- Панель меню -->
+        
         <Menu Grid.Row="0" Grid.ColumnSpan="5" Background="White">
             <MenuItem Header="File">
                 <MenuItem Header="New Project" Click="NewProject_Click"/>
@@ -67,41 +65,33 @@
                 </MenuItem>
             </MenuItem>
         </Menu>
-
-        <!-- Панель Иерархии -->
+        
         <GroupBox Header="Hierarchy" Grid.Row="1" Grid.Column="0">
             <local:HierarchyPanel x:Name="HierarchyPanel"/>
         </GroupBox>
-
-        <!-- Горизонтальный GridSplitter для изменения ширины панели иерархии -->
+        
         <GridSplitter Grid.Row="1" Grid.Column="1" Width="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" />
-
-        <!-- Основная область сцены и панель файлов -->
+        
         <Grid Grid.Row="1" Grid.Column="2">
             <Grid.RowDefinitions>
-                <RowDefinition Height="4*" />  <!-- Область сцены -->
-                <RowDefinition Height="5" />   <!-- Вертикальный разделитель -->
-                <RowDefinition Height="1*" />  <!-- Панель файлового обозревателя -->
+                <RowDefinition Height="4*" />
+                <RowDefinition Height="5" />
+                <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
-
-            <!-- Основная область сцены -->
+            
             <GroupBox Header="Scene" Grid.Row="0">
                 <local:SceneView x:Name="SceneView"/>
             </GroupBox>
-
-            <!-- Вертикальный GridSplitter для изменения высоты между сценой и панелью файлов -->
+            
             <GridSplitter Grid.Row="1" Height="5" HorizontalAlignment="Stretch" VerticalAlignment="Center" ResizeBehavior="PreviousAndNext" />
-
-            <!-- Панель файлового обозревателя внизу -->
+            
             <GroupBox Header="Project" Grid.Row="2">
                 <local:FileExplorerPanel x:Name="FileExplorerPanel"/>
             </GroupBox>
         </Grid>
-
-        <!-- Горизонтальный GridSplitter для изменения ширины панели инспектора -->
+        
         <GridSplitter Grid.Row="1" Grid.Column="3" Width="5" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ResizeBehavior="PreviousAndNext" />
-
-        <!-- Панель Инспектора -->
+        
         <GroupBox Header="Inspector" Grid.Row="1" Grid.Column="4">
             <local:InspectorPanel x:Name="InspectorPanel"/>
         </GroupBox>

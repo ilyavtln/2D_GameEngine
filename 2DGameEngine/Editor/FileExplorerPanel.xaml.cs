@@ -30,7 +30,7 @@ public partial class FileExplorerPanel : UserControl, INotifyPropertyChanged
     {
         if (FileTreeView.SelectedItem is TreeViewItem selectedItem && selectedItem.Tag is string path && Directory.Exists(path))
         {
-            CurrentDirectory = path; // Обновляем CurrentDirectory на выбранную папку
+            CurrentDirectory = path;
         }
     }
 

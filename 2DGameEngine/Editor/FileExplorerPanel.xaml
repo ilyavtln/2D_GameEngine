@@ -12,15 +12,13 @@
             <ColumnDefinition Width="2" />
             <ColumnDefinition Width="3*" MinWidth="150" />
         </Grid.ColumnDefinitions>
-
-        <!-- Дерево файлов слева -->
+        
         <TreeView x:Name="FileTreeView" Grid.Column="0" MouseDoubleClick="FileTreeView_MouseDoubleClick">
             <TreeViewItem Padding="5 5 5 5" Header="Assets" x:Name="RootFolder" IsExpanded="True" />
         </TreeView>
         
         <GridSplitter Grid.Column="1" Width="1" HorizontalAlignment="Center" VerticalAlignment="Stretch" Background="LightGray" />
         
-        <!-- Панель для отображения файлов справа -->
         <TextBlock x:Name="FileDisplayText" Grid.Column="2" 
                    Background="LightGray" 
                    Text="{Binding CurrentDirectory}" 

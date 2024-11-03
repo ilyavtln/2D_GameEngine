@@ -13,8 +13,4 @@ public class Collider : Component
     {
         Size = new Vector2(1, 1);
     }
-
-    public override void Update()
-    {
-    }
 }
