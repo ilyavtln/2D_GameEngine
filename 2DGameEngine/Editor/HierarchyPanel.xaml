@@ -12,7 +12,9 @@
             <MenuItem Header="Create Sprite">
                 <MenuItem Header="Square" Click="CreateSpriteSquare_Click" />
                 <MenuItem Header="Circle" Click="CreateSpriteCircle_Click" />
+                <MenuItem Header="Triangle" Click="CreateSpriteTriangle_Click" />
             </MenuItem>
+            <MenuItem Header="Create Camera" Click="CreateCamera_Click" />
         </ContextMenu>
     </UserControl.ContextMenu>
 

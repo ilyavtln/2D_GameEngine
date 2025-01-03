@@ -7,7 +7,5 @@
              mc:Ignorable="d"
              d:DesignHeight="300" d:DesignWidth="300">
     <StackPanel x:Name="InspectorStackPanel">
-        <TextBlock Text="Inspector" FontSize="16" Margin="0,0,0,10"/>
-        <!-- В будущем здесь будут динамически добавляться свойства -->
     </StackPanel>
 </UserControl>

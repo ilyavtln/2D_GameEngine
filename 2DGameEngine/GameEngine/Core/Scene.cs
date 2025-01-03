@@ -1,6 +1,6 @@
 ﻿using System.Windows.Controls;
-using System.Windows.Media;
 using System.Windows.Shapes;
+using _2DGameEngine.GameEngine.Components;
 
 namespace _2DGameEngine.GameEngine.Core;
 
@@ -21,6 +21,11 @@ public class Scene
         GameObjects.Add(gameObject);
         GameObjectAdded?.Invoke(gameObject);
     }
+    
+    public GameObject? GetGameObjectByName(string? name)
+    {
+        return GameObjects.FirstOrDefault(obj => obj.Name == name);
+    }
 
     public void Update()
     {
@@ -33,5 +38,16 @@ public class Scene
     public void Render(Canvas canvas)
     {
         canvas.Children.Clear();
+
+        foreach (var gameObject in GameObjects)
+        {
+            var transform = gameObject.GetComponent<Transform>();
+            var spriteRenderer = gameObject.GetComponent<SpriteRenderer>();
+
+            if (transform != null && spriteRenderer != null)
+            {
+                spriteRenderer.Render(canvas, transform);
+            }
+        }
     }
 }

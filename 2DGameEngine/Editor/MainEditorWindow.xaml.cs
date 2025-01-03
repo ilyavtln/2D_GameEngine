@@ -1,12 +1,23 @@
 ﻿using System.Numerics;
 using System.Windows;
+using System.Windows.Controls;
 using _2DGameEngine.GameEngine.Core;
+using _2DGameEngine.GameEngine.Utils.Enums;
 
 namespace _2DGameEngine.Editor;
 
 public partial class MainEditorWindow : Window
 {
-    public Scene Scene = new Scene("Main Scene");
+    public Scene Scene { get; set; } = new Scene("Main Scene");
+
+    // Состояние игры
+    public GameState GameState { get; set; } = GameState.Stopped;
+     
+    // Текущий инструмент
+    public SceneTools SceneTools { get; set; } = SceneTools.View;
+
+    public Canvas SceneCanvas => SceneView.SceneCanvasControl;
+
     private int _sceneIndex = 1;
 
     public MainEditorWindow()
@@ -126,9 +137,6 @@ public partial class MainEditorWindow : Window
 
     }
     
-    /// <summary>
-    /// Закрывает работающее приложение
-    /// </summary>
     private void Exit_Click(object sender, RoutedEventArgs e)
     {
         Application.Current.Shutdown();

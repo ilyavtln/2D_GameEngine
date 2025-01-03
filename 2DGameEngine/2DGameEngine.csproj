@@ -12,7 +12,6 @@
 
     <ItemGroup>
       <Folder Include="Assets\Audio\" />
-      <Folder Include="Assets\Sprites\" />
       <Folder Include="GameEngine\Utils\functions\" />
       <Folder Include="GameEngine\Utils\Interfaces\" />
     </ItemGroup>
@@ -20,6 +19,14 @@
     <ItemGroup>
       <None Remove="Resources\appIcon.ico" />
       <Resource Include="Resources\appIcon.ico" />
+      <None Remove="Assets\Sprites\Circle.png" />
+      <Resource Include="Assets\Sprites\Circle.png" />
+      <None Remove="Assets\Sprites\Square.png" />
+      <Resource Include="Assets\Sprites\Square.png" />
+      <None Remove="Assets\Sprites\Triangle.png" />
+      <Resource Include="Assets\Sprites\Triangle.png" />
+      <None Remove="Assets\Sprites\main boy.png" />
+      <Resource Include="Assets\Sprites\main boy.png" />
     </ItemGroup>
 
 </Project>

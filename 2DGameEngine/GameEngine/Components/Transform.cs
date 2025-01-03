@@ -16,7 +16,7 @@ public class Transform : Component
     public Transform(float x = 0, float y = 0) : base(ComponentName)
     {
         Position = new Vector2(x, y);
-        Scale = new Vector2(x, y);
+        Scale = new Vector2(1.0f, 1.0f);
         Rotation = 0.0f;
     }
 }

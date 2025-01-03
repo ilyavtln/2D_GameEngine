@@ -13,20 +13,36 @@
         </Grid.RowDefinitions>
 
         <!-- Панель инструментов -->
-        <StackPanel Orientation="Horizontal" Background="White" Margin="0,0,0,10">
-            <Button Content="Move" Tag="Move" Click="ToolButton_Click" Background="White"/>
-            <Button Content="Rotate" Tag="Rotate" Click="ToolButton_Click" Background="White"/>
-            <Button Content="Scale" Tag="Scale" Click="ToolButton_Click" Background="White"/>
-            <Button Content="View" Tag="View" Click="ToolButton_Click" Background="White"/>
-        </StackPanel>
+        <StackPanel Background="LightGray">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" /> <!-- Левая часть занимает всё свободное пространство -->
+                    <ColumnDefinition Width="Auto" /> <!-- Правая часть занимает только необходимое место -->
+                </Grid.ColumnDefinitions>
 
-        <!-- Прокручиваемая область -->
+                <!-- Левая часть -->
+                <StackPanel Orientation="Horizontal" Grid.Column="0">
+                    <Button x:Name="ViewButton" Content="View" Click="ViewButton_Click" Background="White"/>
+                    <Button x:Name="MoveButton" Content="Move" Click="MoveButton_Click" Background="White"/>
+                    <Button x:Name="RotateButton" Content="Rotate" Click="RotateButton_Click" Background="White"/>
+                    <Button x:Name="ScaleButton" Content="Scale" Click="ScaleButton_Click" Background="White"/>
+                </StackPanel>
+
+                <!-- Правая часть -->
+                <StackPanel Orientation="Horizontal" Grid.Column="1">
+                    <Button x:Name="PlayButton" Content="Play" Click="PlayButton_Click" Background="White"/>
+                    <Button x:Name="PauseButton" Content="Pause" Click="PauseButton_Click" Background="White"/>
+                    <Button x:Name="StopButton" Content="Stop" Click="StopButton_Click" Background="White"/>
+                </StackPanel>
+            </Grid>
+        </StackPanel>
+        
+        
         <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <Canvas x:Name="SceneCanvas" Background="LightBlue" MouseWheel="SceneCanvas_MouseWheel">
+            <Canvas x:Name="SceneCanvas" MouseWheel="SceneCanvas_MouseWheel">
                 <Canvas.RenderTransform>
                     <ScaleTransform x:Name="ZoomTransform" ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
                 </Canvas.RenderTransform>
-                <!-- Сетка будет рисоваться программно -->
             </Canvas>
         </ScrollViewer>
     </Grid>

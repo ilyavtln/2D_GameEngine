@@ -2,128 +2,244 @@
 using System.Windows.Controls;
 using System.Windows.Input;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using _2DGameEngine.GameEngine.Core;
+using _2DGameEngine.GameEngine.Utils.Enums;
 
 namespace _2DGameEngine.Editor;
 
 public partial class SceneView : UserControl
 {
-    
     private Scene? _scene;
     
-    private double _zoomScale = 1.0; // Начальный масштаб
+    private double _zoomScale = 1.0;
     private readonly double _maxScale = 40.0;
     private readonly double _minScale = 1.0;
-    private readonly int _gridSize = 8;
-    private readonly double _strokeThickness = 0.2;
-    private string? _currentTool = "View";
+    
+    private SceneTools CurrentTool
+    {
+        get => (Window.GetWindow(this) as MainEditorWindow)?.SceneTools ?? SceneTools.View;
+        set
+        {
+            if (Window.GetWindow(this) is not MainEditorWindow mainWindow) return;
+            mainWindow.SceneTools = value;
+            UpdateToolsButtons(CurrentTool);
+        }
+    }
+
+    private GameState CurrentGameState
+    {
+        get => (Window.GetWindow(this) as MainEditorWindow)?.GameState ?? GameState.Stopped;
+        set
+        {
+            if (Window.GetWindow(this) is not MainEditorWindow mainWindow) return;
+            mainWindow.GameState = value;
+            UpdatePlayButtons(value);
+        }
+    }
+
+
+    private DispatcherTimer? _gameLoopTimer;
+    
+    public Canvas SceneCanvasControl => SceneCanvas;
     
     public SceneView()
     {
         InitializeComponent();
-        DrawGrid(); // Рисуем сетку при инициализации
-        SceneCanvas.SizeChanged += SceneCanvas_SizeChanged; 
+        UpdatePlayButtons(CurrentGameState);
+        UpdateToolsButtons(CurrentTool);
+        Loaded += (s, e) => DrawGrid();
+        SceneCanvas.SizeChanged += (s, e) => DrawGrid();
+        InitializeGameLoop();
+    }
+    
+    private void InitializeGameLoop()
+    {
+        _gameLoopTimer = new DispatcherTimer
+        {
+            Interval = TimeSpan.FromMilliseconds(16)
+        };
+        _gameLoopTimer.Tick += GameLoop_Tick;
+    }
+    
+    private void GameLoop_Tick(object? sender, EventArgs e)
+    {
+        UpdateGame();
+    }
+    
+    private void UpdateGame()
+    {
+
+    }
+    
+    private void ResetGameState()
+    {
+        // Сбросить состояние игры
     }
     
     public void SetScene(Scene? scene)
     {
         _scene = scene;
-        _scene.GameObjectAdded += OnGameObjectAdded;
+        if (_scene != null) _scene.GameObjectAdded += OnGameObjectAdded;
     }
 
     private void OnGameObjectAdded(GameObject gameObject)
     {
+        if (_scene == null) return;
+
         _scene.Render(SceneCanvas);
-    }
-
-    private void SceneCanvas_SizeChanged(object sender, SizeChangedEventArgs e)
-    {
-        DrawGrid(); // Обновляем сетку при изменении размера
-    }
-
-    private void DrawGrid()
-    {
-        SceneCanvas.Children.Clear(); // Очистка предыдущих линий сетки
-        double viewportWidth = SceneCanvas.ActualWidth;
-        double viewportHeight = SceneCanvas.ActualHeight;
-
-        // Рисуем вертикальные линии
-        for (double x = 0; x < viewportWidth; x += _gridSize)
-        {
-            var line = new Line
-            {
-                X1 = x,
-                Y1 = 0,
-                X2 = x,
-                Y2 = viewportHeight,
-                Stroke = Brushes.Gray,
-                StrokeThickness = _strokeThickness
-            };
-            SceneCanvas.Children.Add(line);
-        }
-
-        // Рисуем горизонтальные линии
-        for (double y = 0; y < viewportHeight; y += _gridSize)
-        {
-            var line = new Line
-            {
-                X1 = 0,
-                Y1 = y,
-                X2 = viewportWidth,
-                Y2 = y,
-                Stroke = Brushes.Gray,
-                StrokeThickness = _strokeThickness
-            };
-            SceneCanvas.Children.Add(line);
-        }
     }
     
     private void SceneCanvas_MouseWheel(object sender, MouseWheelEventArgs e)
     {
-        // Обработка зума
-        if (e.Delta > 0) // Приближение
-        {
-            if (_zoomScale < _maxScale) // Максимальный масштаб
-            {
-                _zoomScale *= 1.1;
-            }
-        }
-        else // Отдаление
-        {
-            if (_zoomScale > _minScale) // Минимальный масштаб
-            {
-                _zoomScale /= 1.1;
-            }
-        }
+        Point mousePosition = e.GetPosition(SceneCanvas);
+        
+        double zoomFactor = (e.Delta > 0) ? 1.1 : 0.9;
+        double newZoomScale = _zoomScale * zoomFactor;
+        
+        if (newZoomScale > _maxScale || newZoomScale < _minScale) return;
 
-        // Применение масштаба
+        _zoomScale = newZoomScale;
+        
+        ZoomTransform.CenterX = mousePosition.X;
+        ZoomTransform.CenterY = mousePosition.Y;
+        
         ZoomTransform.ScaleX = _zoomScale;
         ZoomTransform.ScaleY = _zoomScale;
-
-        DrawGrid(); // Перерисовка сетки с новым масштабом
     }
+
     
-    private void ToolButton_Click(object sender, RoutedEventArgs e)
+    private void DrawGrid(double cellSize = 16)
     {
-        if (sender is Button button)
+        SceneCanvas.Children.Clear();
+
+        double width = SceneCanvas.ActualWidth;
+        double height = SceneCanvas.ActualHeight;
+
+        for (double x = 0; x < width; x += cellSize)
         {
-            // Установка текущего инструмента
-            _currentTool = button.Tag.ToString();
-            UpdateToolSelection(button); // Передаем текущую кнопку
+            var verticalLine = new Line
+            {
+                X1 = x,
+                Y1 = 0,
+                X2 = x,
+                Y2 = height,
+                Stroke = new SolidColorBrush(Colors.Gray),
+                StrokeThickness = 0.5
+            };
+            SceneCanvas.Children.Add(verticalLine);
+        }
+
+        for (double y = 0; y < height; y += cellSize)
+        {
+            var horizontalLine = new Line
+            {
+                X1 = 0,
+                Y1 = y,
+                X2 = width,
+                Y2 = y,
+                Stroke = new SolidColorBrush(Colors.Gray),
+                StrokeThickness = 0.5
+            };
+            SceneCanvas.Children.Add(horizontalLine);
         }
     }
 
-    private void UpdateToolSelection(Button selectedButton)
+
+    private void PlayButton_Click(object sender, RoutedEventArgs e)
     {
-        var stackPanel = (StackPanel) selectedButton.Parent;
-    
-        foreach (var child in stackPanel.Children)
+        if (CurrentGameState != GameState.Playing)
         {
-            if (child is Button button)
-            {
-                button.Background = button.Tag.ToString() == _currentTool ? Brushes.LightBlue : Brushes.White;
-            }
+            CurrentGameState = GameState.Playing;
+            _gameLoopTimer?.Start();
+            MessageBox.Show("Game Started!");
+        }
+    }
+    
+    private void PauseButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (CurrentGameState != GameState.Paused && CurrentGameState != GameState.Stopped)
+        {
+            CurrentGameState = GameState.Paused;
+            _gameLoopTimer?.Stop();
+            MessageBox.Show("Game Paused!");
+        }
+    }
+    
+    private void StopButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (CurrentGameState != GameState.Paused && CurrentGameState != GameState.Stopped)
+        {
+            CurrentGameState = GameState.Stopped;
+            _gameLoopTimer?.Stop();
+            MessageBox.Show("Game Stopped!");
+            ResetGameState();
+        }
+    }
+    
+    private void UpdatePlayButtons(GameState state)
+    {
+        PlayButton.Background = new SolidColorBrush(Colors.White);
+        PauseButton.Background = new SolidColorBrush(Colors.White);
+        StopButton.Background = new SolidColorBrush(Colors.White);
+        
+        switch (state)
+        {
+            case GameState.Playing:
+                PlayButton.Background = new SolidColorBrush(Colors.LightGreen);
+                break;
+            case GameState.Paused:
+                PauseButton.Background = new SolidColorBrush(Colors.LightSalmon);
+                break;
+            case GameState.Stopped:
+                StopButton.Background = new SolidColorBrush(Colors.LightCoral);
+                break;
+        }
+    }
+    
+    private void RotateButton_Click(object sender, RoutedEventArgs e)
+    {
+        CurrentTool = SceneTools.Rotate;
+    }
+
+    private void ViewButton_Click(object sender, RoutedEventArgs e)
+    {
+        CurrentTool = SceneTools.View;
+    }
+
+    private void MoveButton_Click(object sender, RoutedEventArgs e)
+    {
+        CurrentTool = SceneTools.Move;
+    }
+
+    private void ScaleButton_Click(object sender, RoutedEventArgs e)
+    {
+        CurrentTool = SceneTools.Scale;
+    }
+    
+    private void UpdateToolsButtons(SceneTools tools)
+    {
+        ViewButton.Background = new SolidColorBrush(Colors.White);
+        MoveButton.Background = new SolidColorBrush(Colors.White);
+        RotateButton.Background = new SolidColorBrush(Colors.White);
+        ScaleButton.Background = new SolidColorBrush(Colors.White);
+        
+        switch (tools)
+        {
+            case SceneTools.View:
+                ViewButton.Background = new SolidColorBrush(Colors.LightBlue);
+                break;
+            case SceneTools.Move:
+                MoveButton.Background = new SolidColorBrush(Colors.LightBlue);
+                break;
+            case SceneTools.Rotate:
+                RotateButton.Background = new SolidColorBrush(Colors.LightBlue);
+                break;
+            case SceneTools.Scale:
+                ScaleButton.Background = new SolidColorBrush(Colors.LightBlue);
+                break;
         }
     }
 }

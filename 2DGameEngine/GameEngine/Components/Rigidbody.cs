@@ -6,6 +6,8 @@ public class Rigidbody : Component
 {
     public static readonly string ComponentName = "Rigidbody";
     
+    public double? Mass { get; set; }
+    
     public Rigidbody() : base(ComponentName)
     {
     }
