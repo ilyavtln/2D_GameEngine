@@ -15,7 +15,7 @@ public partial class SceneView : UserControl
     private Scene? _scene;
     
     private double _zoomScale = 1.0;
-    private readonly double _maxScale = 40.0;
+    private readonly double _maxScale = 200.0;
     private readonly double _minScale = 1.0;
     
     private SceneTools CurrentTool
@@ -50,8 +50,6 @@ public partial class SceneView : UserControl
         InitializeComponent();
         UpdatePlayButtons(CurrentGameState);
         UpdateToolsButtons(CurrentTool);
-        Loaded += (s, e) => DrawGrid();
-        SceneCanvas.SizeChanged += (s, e) => DrawGrid();
         InitializeGameLoop();
     }
     
@@ -109,44 +107,6 @@ public partial class SceneView : UserControl
         ZoomTransform.ScaleX = _zoomScale;
         ZoomTransform.ScaleY = _zoomScale;
     }
-
-    
-    private void DrawGrid(double cellSize = 16)
-    {
-        SceneCanvas.Children.Clear();
-
-        double width = SceneCanvas.ActualWidth;
-        double height = SceneCanvas.ActualHeight;
-
-        for (double x = 0; x < width; x += cellSize)
-        {
-            var verticalLine = new Line
-            {
-                X1 = x,
-                Y1 = 0,
-                X2 = x,
-                Y2 = height,
-                Stroke = new SolidColorBrush(Colors.Gray),
-                StrokeThickness = 0.5
-            };
-            SceneCanvas.Children.Add(verticalLine);
-        }
-
-        for (double y = 0; y < height; y += cellSize)
-        {
-            var horizontalLine = new Line
-            {
-                X1 = 0,
-                Y1 = y,
-                X2 = width,
-                Y2 = y,
-                Stroke = new SolidColorBrush(Colors.Gray),
-                StrokeThickness = 0.5
-            };
-            SceneCanvas.Children.Add(horizontalLine);
-        }
-    }
-
 
     private void PlayButton_Click(object sender, RoutedEventArgs e)
     {

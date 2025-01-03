@@ -134,7 +134,7 @@ public partial class MainEditorWindow : Window
 
     private void Build_Click(object sender, RoutedEventArgs e)
     {
-
+        
     }
     
     private void Exit_Click(object sender, RoutedEventArgs e)

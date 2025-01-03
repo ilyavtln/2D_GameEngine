@@ -13,7 +13,7 @@
         </Grid.RowDefinitions>
 
         <!-- Панель инструментов -->
-        <StackPanel Background="LightGray">
+        <StackPanel Background="LightSlateGray">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" /> <!-- Левая часть занимает всё свободное пространство -->
@@ -39,7 +39,7 @@
         
         
         <ScrollViewer x:Name="ScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden">
-            <Canvas x:Name="SceneCanvas" MouseWheel="SceneCanvas_MouseWheel">
+            <Canvas x:Name="SceneCanvas" Background="LightGray" MouseWheel="SceneCanvas_MouseWheel">
                 <Canvas.RenderTransform>
                     <ScaleTransform x:Name="ZoomTransform" ScaleX="1.0" ScaleY="1.0" CenterX="0.5" CenterY="0.5" />
                 </Canvas.RenderTransform>
